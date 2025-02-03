@@ -1,0 +1,54 @@
+import { useState } from "react";
+import { Card, CardContent } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+
+const studyPlan = [
+  { day: "Monday", time: "8 AM - 10 AM", task: "Mathematics" },
+  { day: "Monday", time: "10 AM - 12 PM", task: "Reasoning" },
+  { day: "Monday", time: "12 PM - 1 PM", task: "General Awareness (Study)" },
+  { day: "Monday", time: "2 PM - 3 PM", task: "30 General Awareness Questions" },
+  { day: "Monday", time: "3 PM - 5 PM", task: "Revision + Doubt Solving" },
+  { day: "Tuesday - Saturday", time: "8 AM - 10 AM", task: "Mathematics" },
+  { day: "Tuesday - Saturday", time: "10 AM - 12 PM", task: "Reasoning" },
+  { day: "Tuesday - Saturday", time: "12 PM - 1 PM", task: "General Awareness (Study)" },
+  { day: "Tuesday - Saturday", time: "2 PM - 3 PM", task: "30 General Awareness Questions" },
+  { day: "Tuesday - Saturday", time: "3 PM - 5 PM", task: "Mixed Practice (Math + Reasoning)" },
+  { day: "Tuesday - Saturday", time: "5 PM - 6 PM", task: "Previous Year Questions" },
+  { day: "Tuesday - Saturday", time: "6 PM - 8 PM", task: "Doubt Solving & Short Notes Making" },
+  { day: "Sunday", time: "Morning", task: "Mock Test" },
+  { day: "Sunday", time: "Afternoon", task: "Mock Test Analysis & Weak Area Revision" },
+];
+
+export default function StudyScheduleApp() {
+  const [completed, setCompleted] = useState([]);
+
+  const toggleTask = (task) => {
+    setCompleted((prev) =>
+      prev.includes(task) ? prev.filter((t) => t !== task) : [...prev, task]
+    );
+  };
+
+  return (
+    <div className="p-6 max-w-2xl mx-auto">
+      <h1 className="text-2xl font-bold mb-4">RRB NTPC Study Schedule</h1>
+      {studyPlan.map((item, index) => (
+        <Card
+          key={index}
+          className={`mb-2 p-4 ${completed.includes(item.task) ? "bg-green-200" : ""}`}
+        >
+          <CardContent>
+            <p className="text-lg font-semibold">{item.day}</p>
+            <p className="text-sm text-gray-600">{item.time}</p>
+            <p className="text-md mt-1">{item.task}</p>
+            <Button
+              className="mt-2"
+              onClick={() => toggleTask(item.task)}
+            >
+              {completed.includes(item.task) ? "Mark as Incomplete" : "Mark as Done"}
+            </Button>
+          </CardContent>
+        </Card>
+      ))}
+    </div>
+  );
+}
